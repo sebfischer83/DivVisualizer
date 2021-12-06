@@ -1,0 +1,11 @@
+﻿@namespace DivVizParqet
+
+<Router AppAssembly="@typeof(AppPage).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+    </Found>
+    <NotFound>
+        <PageTitle>Not found</PageTitle>
+        Not Found
+    </NotFound>
+</Router>

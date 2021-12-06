@@ -1,0 +1,197 @@
+﻿:root {
+    --z-fixed: 100;
+    --header-height: 40px;
+    --nav-width: 219px;
+    --font-medium: 500;
+    --font-semi-bold: 600;
+}
+
+body {
+    margin: 0 0 0 0;
+    --body-font: Segoe UI, sans-serif;
+    font-family: var(--body-font);
+    font-size: var(--type-ramp-base-font-size);
+    line-height: var(--type-ramp-base-line-height);
+    /*padding: 1rem 1rem 0;*/
+}
+
+.container {
+    height: 100vh;
+    background-color: var(--fill-color);
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    padding: 0 1rem;
+    z-index: var(--z-fixed);
+    background-color: var(--neutral-fill-secondary-rest);
+}
+
+.header__container {
+    display: flex;
+    align-items: center;
+    height: var(--header-height);
+    justify-content: space-between;
+    padding-inline-start: calc(var(--design-unit) * 6px + 52px);
+}
+
+.header__theme {
+    font-size: 1.2rem;
+    padding: 0;
+    display: flex;
+}
+
+.main {
+}
+
+.content {
+    color: var(--neutral-foreground-rest);
+    padding-inline-start: calc(var(--design-unit) * 8px + 52px);
+}
+
+
+#blazor-error-ui {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+    #blazor-error-ui .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }
+
+.blazor-error-boundary {
+    padding: 1rem 1rem 1rem 3.7rem;
+    color: white;
+}
+
+.blazor-error-boundary::after {
+    content: "An error has occurred."
+}
+
+/*===== Show menu =====*/
+.show-menu {
+    left: 0;
+}
+
+@media screen and (max-width: 320px) {
+    .header__search {
+        width: 70%;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    
+}
+
+/**/
+/*:root {
+    --z-fixed: 100;
+    --header-height: 40px;
+    --nav-width: 219px;
+}
+
+body {
+    --body-font: Segoe UI, sans-serif;
+    font-family: var(--body-font);
+    font-size: var(--type-ramp-base-font-size);
+    line-height: var(--type-ramp-base-line-height);
+    margin: 0;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: var(--header-height) 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+                       "siteheader"
+                       "main";
+    height: 100vh;
+    background-color: var(--fill-color);
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    box-shadow: 0 1px 0 rgba(22, 8, 43, 0.1);
+    padding: 0 1rem;
+    z-index: var(--z-fixed);
+}
+
+.header__container {
+    display: flex;
+    align-items: center;
+    height: var(--header-height);
+    justify-content: space-between;
+}
+
+.header__toggle {
+    font-size: 1.2rem;
+}
+
+.main {
+    display: grid;
+    grid-template-columns: 4fr;
+    grid-template-rows: 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+                       "content";
+    grid-area: main;*/
+    /*height: 100vh;*/
+/*}
+
+.content {
+    grid-area: content;
+    --elevation: 2;
+    background-color: var(--fill-color);
+    color: var(--neutral-foreground-rest);
+    padding-inline-start: calc(var(--design-unit) * 6px);
+}
+
+
+#blazor-error-ui {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+#blazor-error-ui .dismiss {
+    cursor: pointer;
+    position: absolute;
+    right: 0.75rem;
+    top: 0.5rem;
+}
+
+.blazor-error-boundary {
+    padding: 1rem 1rem 1rem 3.7rem;
+    color: white;
+}
+
+.blazor-error-boundary::after {
+    content: "An error has occurred."
+}*/
+

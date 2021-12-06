@@ -1,0 +1,52 @@
+﻿@namespace DivVizParqet.Shared
+@inherits Microsoft.AspNetCore.Components.LayoutComponentBase
+
+<PageTitle>Fluent UI WC demo page</PageTitle>
+
+<FluentDesignSystemProvider BaseLayerLuminance=@baseLayerLuminance>
+    <div class="container">
+        <div class="header">
+            <div class="header__container">
+                <div class="header__theme">
+                    <FluentSwitch @onchange=SwitchTheme>
+                        <span slot="checked-message"><i class="fa-regular fa-moon fa-lg"></i></span>
+                        <span slot="unchecked-message"><i class="fa-solid fa-sun fa-lg"></i></span>
+                    </FluentSwitch>
+                </div>
+            </div>
+        </div>
+        <div>
+            <NavMenu />
+        </div>
+
+        <div class="content">
+            <main>
+
+                <ErrorBoundary @ref="errorBoundary">
+                    <ChildContent>
+                        @Body
+                    </ChildContent>
+                    <ErrorContent Context="ex">
+                        <p class="error">@ex.Message</p>
+                    </ErrorContent>
+                </ErrorBoundary>
+            </main>
+        </div>
+    </div>
+</FluentDesignSystemProvider>
+
+@code
+{
+    float? baseLayerLuminance;
+    ErrorBoundary? errorBoundary;
+
+    public void SwitchTheme()
+    {
+        baseLayerLuminance = baseLayerLuminance == 0 ? 1 : 0;
+    }
+
+    protected override void OnParametersSet()
+    {
+        errorBoundary?.Recover();
+    }
+}

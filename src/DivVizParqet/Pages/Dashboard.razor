@@ -1,0 +1,16 @@
+﻿@namespace DivVizParqet
+@page "/"
+@using DivVizParqet.Data.App
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+
+<h3>Dashboard</h3>
+<h3>Dashboard</h3>
+<h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3>
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await localStorage.SetItemAsync("name", "John Smith");
+        var name = await localStorage.GetItemAsync<string>("name");
+    }
+
+}
