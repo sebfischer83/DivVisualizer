@@ -33,7 +33,7 @@ public class Quote
     public string isin { get; }
     public double price { get; }
     public string currency { get; }
-    public Id _id { get; }
+    public Id _id { get; set; }
     public double? fxRate { get; }
     public string originalCurrency { get; }
     public bool? currencyAdjusted { get; }

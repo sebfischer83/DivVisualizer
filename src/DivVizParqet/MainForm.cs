@@ -4,6 +4,12 @@ using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Blazored.LocalStorage;
+using DivVizParqet.Data.Db;
+using DivVizParqet.Services;
+using DivVizParqet.Store;
+using DnetIndexedDb;
+using DnetIndexedDb.Models;
+using Fluxor;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebView.WindowsForms;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +24,12 @@ namespace DivVizParqet
             //UseImmersiveDarkMode(this.Handle, true);
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddBlazorWebView();
+            //serviceCollection.AddTransient<IndexedDbOptions, DbOptions>();
+
+            serviceCollection.AddFluxor(o => o
+                .ScanAssemblies(typeof(Program).Assembly).UseReduxDevTools(o => o.Name = "DivVizParqet").UseRouting().AddMiddleware<LoggingMiddleware>());
+            serviceCollection.AddScoped<IJsonDepotService, JsonDepotService>();
+           
             serviceCollection.AddBlazoredLocalStorage(config =>
             {
                 config.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
@@ -30,7 +42,10 @@ namespace DivVizParqet
             });
             serviceCollection.AddSingleton<IErrorBoundaryLogger>(new NullErrorBoundaryLogger());
             serviceCollection.AddScoped(sp => new HttpClient { BaseAddress = new Uri("localhost") });
-
+            serviceCollection.AddIndexedDbDatabase<StockDataIndexDb>(options =>
+            {
+                options.UseDatabase(StockDataIndexDb.GetModel());
+            });
             var blazor = new BlazorWebView()
             {
                 Dock = DockStyle.Fill,
@@ -38,10 +53,11 @@ namespace DivVizParqet
                 Services = serviceCollection.BuildServiceProvider()
             };
             blazor.RootComponents.Add<AppPage>("#app");
-
+           
             //blazor.WebView.WebMessageReceived
             Controls.Add(blazor);
         }
+
 
         [DllImport("dwmapi.dll")]
         private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);

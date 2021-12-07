@@ -1,4 +1,7 @@
-﻿namespace DivVizParqet.Data.Json;
+﻿using Newtonsoft.Json;
+using System.Text.Json.Serialization;
+
+namespace DivVizParqet.Data.Json;
 
 public class Holding
 {
@@ -16,8 +19,8 @@ public class Holding
         Quote quote,
         StartQuote startQuote,
         bool currencyAdjusted,
-        Performance performance,
-        List<FutureDividend> futureDividends,
+        //Performance performance,
+        //List<FutureDividend> futureDividends,
         string originalCurrency,
         double? fxRateBeginning,
         double? fxRateToday,
@@ -39,8 +42,8 @@ public class Holding
         this.quote = quote;
         this.startQuote = startQuote;
         this.currencyAdjusted = currencyAdjusted;
-        this.performance = performance;
-        this.futureDividends = futureDividends;
+        //this.performance = performance;
+        //this.futureDividends = futureDividends;
         this.originalCurrency = originalCurrency;
         this.fxRateBeginning = fxRateBeginning;
         this.fxRateToday = fxRateToday;
@@ -49,7 +52,8 @@ public class Holding
         this.createdAt = createdAt;
     }
 
-    public string _id { get; }
+    [JsonProperty("_id")]
+    public string _id { get; set; }
     public Security security { get; }
     public string portfolio { get; }
     public string exchange { get; }
@@ -62,8 +66,8 @@ public class Holding
     public Quote quote { get; }
     public StartQuote startQuote { get; }
     public bool currencyAdjusted { get; }
-    public Performance performance { get; }
-    public IReadOnlyList<FutureDividend> futureDividends { get; }
+    //public Performance performance { get; }
+    //public IReadOnlyList<FutureDividend> futureDividends { get; }
     public string originalCurrency { get; }
     public double? fxRateBeginning { get; }
     public double? fxRateToday { get; }

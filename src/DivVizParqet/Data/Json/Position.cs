@@ -3,11 +3,11 @@
 public class Position
 {
     public Position(
-        int shares,
+        double shares,
         double purchasePrice,
-        int purchaseValue,
+        double purchaseValue,
         double currentPrice,
-        int currentValue,
+        double currentValue,
         double allocation
     )
     {
@@ -19,10 +19,10 @@ public class Position
         this.allocation = allocation;
     }
 
-    public int shares { get; }
+    public double shares { get; }
     public double purchasePrice { get; }
-    public int purchaseValue { get; }
+    public double purchaseValue { get; }
     public double currentPrice { get; }
-    public int currentValue { get; }
+    public double currentValue { get; }
     public double allocation { get; }
 }

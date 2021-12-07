@@ -21,8 +21,8 @@ public class Portfolio
         ActivityForm activityForm,
         string ownerTier,
         bool isOwnerPlus,
-        string ownerName,
-        Performance performance
+        string ownerName
+        //Performance performance
     )
     {
         this._id = __id;
@@ -44,10 +44,10 @@ public class Portfolio
         this.ownerTier = ownerTier;
         this.isOwnerPlus = isOwnerPlus;
         this.ownerName = ownerName;
-        this.performance = performance;
+        //this.performance = performance;
     }
 
-    public string _id { get; }
+    public string _id { get; set; }
     public string user { get; }
     public string name { get; }
     public bool @public { get; }
@@ -66,5 +66,5 @@ public class Portfolio
     public string ownerTier { get; }
     public bool isOwnerPlus { get; }
     public string ownerName { get; }
-    public Performance performance { get; }
+    //public Performance performance { get; }
 }

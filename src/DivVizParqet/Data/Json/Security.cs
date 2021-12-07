@@ -44,7 +44,7 @@ public class Security
         this.logo = logo;
     }
 
-    public string _id { get; }
+    public string _id { get; set; }
     public string website { get; }
     public string name { get; }
     public string type { get; }

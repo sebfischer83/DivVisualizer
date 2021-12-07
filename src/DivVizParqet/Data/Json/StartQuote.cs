@@ -27,7 +27,7 @@ public class StartQuote
         this.currencyAdjusted = currencyAdjusted;
     }
 
-    public Id _id { get; }
+    public Id _id { get; set; }
     public string currency { get; }
     public string exchange { get; }
     public string date { get; }

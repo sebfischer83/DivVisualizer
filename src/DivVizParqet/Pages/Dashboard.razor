@@ -1,16 +1,15 @@
-﻿@namespace DivVizParqet
+﻿@namespace DivVizParqet.Pages
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
 @page "/"
-@using DivVizParqet.Data.App
-@inject Blazored.LocalStorage.ILocalStorageService localStorage
 
-<h3>Dashboard</h3>
-<h3>Dashboard</h3>
-<h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3><h3>Dashboard</h3>
-@code {
-    protected override async Task OnInitializedAsync()
-    {
-        await localStorage.SetItemAsync("name", "John Smith");
-        var name = await localStorage.GetItemAsync<string>("name");
-    }
-
+<h3>Dashboard</h3
+@if (IsDataAlreadyImported())
+{
+    <span>@AppState?.Value.LastSyncStocks</span>
+    <span>@AppState?.Value.LastSyncMeta</span>
+}
+else
+{
+    <InputFile OnChange="@UploadStocksAsync"></InputFile>
+    @IsLoading
 }

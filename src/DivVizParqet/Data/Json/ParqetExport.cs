@@ -12,7 +12,7 @@ namespace DivVizParqet.Data.Json
     public class ParqetExport
     {
         public ParqetExport(
-            Performance performance,
+            //Performance performance,
             List<Activity> activities,
             List<Holding> holdings,
             Portfolio portfolio,
@@ -20,7 +20,7 @@ namespace DivVizParqet.Data.Json
             AbsoluteValuePaths absoluteValuePaths
         )
         {
-            this.performance = performance;
+            //this.performance = performance;
             this.activities = activities;
             this.holdings = holdings;
             this.portfolio = portfolio;
@@ -28,7 +28,7 @@ namespace DivVizParqet.Data.Json
             this.absoluteValuePaths = absoluteValuePaths;
         }
 
-        public Performance performance { get; }
+        //public Performance performance { get; }
         public IReadOnlyList<Activity> activities { get; }
         public IReadOnlyList<Holding> holdings { get; }
         public Portfolio portfolio { get; }

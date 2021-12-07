@@ -11,16 +11,16 @@ public class Activity
         string type,
         string isin,
         string company,
-        int shares,
-        int tax,
-        int fee,
+        double shares,
+        double tax,
+        double fee,
         string date,
         DateTime datetime,
         double price,
         string portfolio,
         string user,
         string holding,
-        int amount,
+        double? amount,
         string currency,
         DateTime createdAt,
         DateTime updatedAt,
@@ -52,21 +52,21 @@ public class Activity
         this.realizedGains = realizedGains;
     }
 
-    public string _id { get; }
+    public string _id { get; set; }
     public string broker { get; }
     public string type { get; }
     public string isin { get; }
     public string company { get; }
-    public int shares { get; }
-    public int tax { get; }
-    public int fee { get; }
+    public double shares { get; }
+    public double tax { get; }
+    public double fee { get; }
     public string date { get; }
     public DateTime datetime { get; }
     public double price { get; }
     public string portfolio { get; }
     public string user { get; }
     public string holding { get; }
-    public int amount { get; }
+    public double? amount { get; }
     public string currency { get; }
     public DateTime createdAt { get; }
     public DateTime updatedAt { get; }
