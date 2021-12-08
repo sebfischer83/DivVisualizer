@@ -1,0 +1,25 @@
+﻿<Card Style="width:300px;">
+    <div>
+        <div>
+            <Select DataSource="@Datasources"
+                    @bind-Value="@SelectedValue"
+                    DefaultValue="@DefValue"
+                    Style="width:220px"
+                    OnSelectedItemChanged="OnSelectedItemChangedHandler">
+            </Select>
+        </div>
+        <div>
+            <h4>Letzter Import</h4>
+            <span class="importHistory">Quelle: @(AppState.Value.LastImportDataSourceDescription)</span>
+            <span class="importHistory">Depot: @(AppState.Value.LastImportDataSourceDescription)</span>
+            <span class="importHistory">Stammdaten: @(AppState.Value.LastImportDataSourceDescription)</span>
+        </div>
+    </div>
+
+    <div>
+        @if (SelectedSource == Data.ImportDataSource.ParqetFile)
+        {
+            <DivVisualizer.Components.ParqetUpload.ParqetUploadComponent></DivVisualizer.Components.ParqetUpload.ParqetUploadComponent>
+        }
+    </div>
+</Card>

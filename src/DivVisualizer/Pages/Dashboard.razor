@@ -1,0 +1,15 @@
+﻿@namespace DivVizParqet.Pages
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@page "/"
+
+<h3>Dashboard</h3
+@if (IsDataAlreadyImported())
+{
+    <span>@AppState?.Value.LastSyncStocks</span>
+    <span>@AppState?.Value.LastSyncMeta</span>
+    <span>@AppState?.Value.LastImportDataSourceDescription</span>
+}
+else
+{
+    <Button Type="@ButtonType.Default">Hello World!</Button>
+}
