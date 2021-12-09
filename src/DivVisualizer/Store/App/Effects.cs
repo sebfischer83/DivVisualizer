@@ -38,5 +38,20 @@ namespace DivVisualizer.Store.App
 
             dispatcher.Dispatch(new LoadDataResultAction(lastSyncStocks, lastSyncMetadata, importDataSource));
         }
+
+        [EffectMethod()]
+        public async Task HandleSetImportDataAction(SetImportDataAction setImportDataAction, IDispatcher dispatcher)
+        {
+            if (setImportDataAction.LastSyncStocks != DateTime.MinValue)
+                await LocalStorageService.SetItemAsync(StockKey, setImportDataAction.LastSyncStocks);
+
+            if (setImportDataAction.LastSyncMetadata != DateTime.MinValue)
+                await LocalStorageService.SetItemAsync(MetadataKey, setImportDataAction.LastSyncMetadata);
+
+            await LocalStorageService.SetItemAsync(ImportSourceKey, setImportDataAction.LastImportDataSource);
+
+            dispatcher.Dispatch(new LoadDataResultAction(setImportDataAction.LastSyncStocks ?? DateTime.MinValue,
+                setImportDataAction.LastSyncMetadata ?? DateTime.MinValue, setImportDataAction.LastImportDataSource));
+        }
     }
 }

@@ -1,13 +1,13 @@
 ﻿@namespace DivVizParqet.Pages
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 @page "/"
+@using DivVisualizer.Components.DataOverview
+@using DivVisualizer.Components.DataSource
 
 <h3>Dashboard</h3
 @if (IsDataAlreadyImported())
 {
-    <span>@AppState?.Value.LastSyncStocks</span>
-    <span>@AppState?.Value.LastSyncMeta</span>
-    <span>@AppState?.Value.LastImportDataSourceDescription</span>
+    <DataOverview></DataOverview>
 }
 else
 {

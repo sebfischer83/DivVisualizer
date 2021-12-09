@@ -1,0 +1,10 @@
+﻿@if (DatabaseOverview != null)
+{
+    <Descriptions Title="Übersicht" Size="@DescriptionsSize.Small"  Layout="@DescriptionsLayout.Horizontal" Column="1" 
+    Colon="true">
+        <DescriptionsItem Title="Aktien">@DatabaseOverview.Stocks</DescriptionsItem><br>
+        <DescriptionsItem Title="Dividenden">@DatabaseOverview.Dividends</DescriptionsItem>
+        <DescriptionsItem Title="erste Dividende">@DatabaseOverview.EarliestDate.ToString("d")</DescriptionsItem>
+        <DescriptionsItem Title="Summe Dividenden (netto)">@DatabaseOverview.SumDividends</DescriptionsItem>
+    </Descriptions>
+}

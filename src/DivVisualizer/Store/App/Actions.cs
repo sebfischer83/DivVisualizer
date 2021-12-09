@@ -28,4 +28,20 @@ namespace DivVisualizer.Store.App
             LastImportDataSource = dataSource;
         }
     }
+
+    internal class SetImportDataAction
+    {
+        public DateTime? LastSyncStocks { get; }
+
+        public DateTime? LastSyncMetadata { get; }
+
+        public ImportDataSource LastImportDataSource { get; }
+
+        public SetImportDataAction(DateTime? lastSyncStocks, DateTime? lastSyncMetadata, ImportDataSource dataSource)
+        {
+            LastSyncStocks = lastSyncStocks;
+            LastSyncMetadata = lastSyncMetadata;
+            LastImportDataSource = dataSource;
+        }
+    }
 }

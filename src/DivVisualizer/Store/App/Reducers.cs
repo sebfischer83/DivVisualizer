@@ -13,5 +13,10 @@ namespace DivVizParqet.Store.App
         public static AppState ReduceLoadDataResultAction(AppState state, LoadDataResultAction action) =>
             state with { LastSyncMeta = action.LastSyncMetadata, 
                 LastSyncStocks = action.LastSyncStocks, LastImportDataSource = action.LastImportDataSource };
+
+        [ReducerMethod()]
+        public static AppState ReduceSetImportDataAction(AppState state, SetImportDataAction action) =>
+            state with
+            { };
     }
 }

@@ -23,9 +23,14 @@ namespace DivVisualizer.Data.Db
                 .WithVersion(1)
                 .WithModelId(0);
 
-            model.AddStore("Stocks").WithAutoIncrementingKey("tableId").AddUniqueIndex("id").AddIndex("name");
+            model.AddStore("Stocks").WithAutoIncrementingKey("tableId").AddUniqueIndex("id").AddIndex("name").AddIndex("isin");
 
-            model.AddStore("Dividends").WithAutoIncrementingKey("tableId").AddUniqueIndex("id").AddIndex("name");
+            model.AddStore("Dividends").WithAutoIncrementingKey("tableId").AddUniqueIndex("id").AddIndex("ShareId").AddIndex("year")
+                .AddIndex("month").AddIndex("day");
+
+            model.AddStore("DividendSumsYear").WithAutoIncrementingKey("tableId").AddUniqueIndex("year");
+
+            model.AddStore("DatabaseStatistics").WithKey("id").AddIndex("stocks");
 
             return model;
         }

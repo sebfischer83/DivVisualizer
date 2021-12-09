@@ -1,25 +1,41 @@
-﻿<Card Style="width:300px;">
-    <div>
-        <div>
-            <Select DataSource="@Datasources"
-                    @bind-Value="@SelectedValue"
-                    DefaultValue="@DefValue"
-                    Style="width:220px"
-                    OnSelectedItemChanged="OnSelectedItemChangedHandler">
-            </Select>
-        </div>
-        <div>
-            <h4>Letzter Import</h4>
-            <span class="importHistory">Quelle: @(AppState.Value.LastImportDataSourceDescription)</span>
-            <span class="importHistory">Depot: @(AppState.Value.LastImportDataSourceDescription)</span>
-            <span class="importHistory">Stammdaten: @(AppState.Value.LastImportDataSourceDescription)</span>
-        </div>
-    </div>
+﻿@using DivVizParqet.Components.ParqetUpload
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
-    <div>
-        @if (SelectedSource == Data.ImportDataSource.ParqetFile)
-        {
-            <DivVisualizer.Components.ParqetUpload.ParqetUploadComponent></DivVisualizer.Components.ParqetUpload.ParqetUploadComponent>
-        }
-    </div>
+<Card Style="width:300px;">
+    <TitleTemplate>
+        <i class="fa-solid fa-table"></i> Datenquelle
+    </TitleTemplate>
+    <Body>
+        <Space Direction="Direction">
+            <SpaceItem>
+                <h5>Letzter Import</h5>
+                <span class="importHistory">Quelle: @(AppState.Value.LastImportDataSourceDescription)</span>
+                <span class="importHistory">Depot: @(FormatDate(AppState.Value.LastSyncStocks))</span>
+                <span class="importHistory">Stammdaten: @(FormatDate(AppState.Value.LastSyncMeta))</span>
+            </SpaceItem>
+
+            <SpaceItem>
+                <Select DataSource="@Datasources"
+                        @bind-Value="@SelectedValue"
+                        Style="width:220px"
+                        OnSelectedItemChanged="OnSelectedItemChangedHandlerAsync">
+                </Select>
+            </SpaceItem>
+
+            <SpaceItem>
+                @if (SelectedSource == Data.ImportDataSource.ParqetFile)
+                {
+                    <ParqetUploadComponent></ParqetUploadComponent>
+                }
+                else if (SelectedSource != Data.ImportDataSource.None)
+                {
+                    <Empty>
+                        <DescriptionTemplate>
+                            <span>Noch nicht verfügbar...</span>
+                        </DescriptionTemplate>
+                    </Empty>
+                }
+            </SpaceItem>
+        </Space>
+    </Body>
 </Card>

@@ -1,15 +1,21 @@
-﻿<div>
-    <label class="custom-file-upload">
-        <InputFile />
-        <i class="fa fa-cloud-upload"></i>
-        Parqet Depotdaten
-    </label>
-</div>
+﻿@namespace DivVizParqet.Components.ParqetUpload
 
-<div>
-    <label class="custom-file-upload">
-        <InputFile />
-        <i class="fa fa-cloud-upload"></i>
-        Parqet Stammdaten
-    </label>
-</div>
+<Spin Spinning=isProcessing>
+    <div>
+        <Text>Ant Design</Text>
+        <br />
+        <label class="custom-file-upload">
+            <InputFile accept=".json" OnChange="UploadParqetStocksFileAsync" />
+            <i class="fa fa-cloud-upload"></i>
+            Parqet Depotdaten
+        </label>
+    </div>
+
+    <div>
+        <label class="custom-file-upload">
+            <InputFile accept=".json" />
+            <i class="fa fa-cloud-upload"></i>
+            Parqet Stammdaten
+        </label>
+    </div>
+</Spin>

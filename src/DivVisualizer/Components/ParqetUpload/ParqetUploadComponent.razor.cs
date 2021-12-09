@@ -1,4 +1,5 @@
-﻿using DivVisualizer.Data.Db;
+﻿using AntDesign;
+using DivVisualizer.Data.Db;
 using DivVisualizer.Services;
 using DivVisualizer.Store.App;
 using Fluxor;
@@ -15,16 +16,18 @@ namespace DivVizParqet.Components.ParqetUpload
     public partial class ParqetUploadComponent
     {
         [Inject]
-        internal IJsonDepotService JsonDepotService { get; set; } = null!;
+        internal IDepotService JsonDepotService { get; set; } = null!;
 
-        [Inject]
-        internal StockDataIndexDb StockDataIndexDb { get; set; } = null!;
+        //[Inject]
+        //internal StockDataIndexDb StockDataIndexDb { get; set; } = null!;
 
         [Inject]
         internal IState<AppState> AppState { get; set; } = null!;
 
-        [Parameter]
-        public EventCallback<bool> IsProcessingEvent { get; set; }
+        [Inject]
+        internal MessageService MessageService { get; set; } = null!;
+
+
 
         public bool IsProcessing
         {
@@ -35,7 +38,6 @@ namespace DivVizParqet.Components.ParqetUpload
             set
             {
                 isProcessing = value;
-                Task.Run(() => IsProcessingEvent.InvokeAsync(isProcessing));
             }
         }
 
@@ -44,8 +46,19 @@ namespace DivVizParqet.Components.ParqetUpload
         public async Task UploadParqetStocksFileAsync(InputFileChangeEventArgs e)
         {
             IsProcessing = true;
-            await JsonDepotService.ImportStockDataFromParqetFile(e.File, StockDataIndexDb);
-            IsProcessing = false;
+            try
+            {
+                await JsonDepotService.ImportStockDataFromParqetFile(e.File);
+                await MessageService.Info("Fertig", 2.5);
+            }
+            catch (Exception ex)
+            {
+                await MessageService.Error(ex.Message, 2.5);
+            }
+            finally
+            {
+                IsProcessing = false;
+            }
         }
     }
 }

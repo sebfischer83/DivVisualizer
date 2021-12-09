@@ -17,11 +17,8 @@ namespace DivVizParqet.Pages
         [Inject]
         internal IState<AppState>? AppState { get; set; }
 
-        internal bool? IsLoading { get; set; }
-
         protected override Task OnInitializedAsync()
         {
-            IsLoading = false;
             return base.OnInitializedAsync();
         }
 
