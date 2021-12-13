@@ -45,6 +45,8 @@ namespace DivVisualizer.Services
             await StockDataIndexDb.OpenIndexedDb();
             await StockDataIndexDb.DeleteAll("Stocks");
             await StockDataIndexDb.DeleteAll("Dividends");
+            await StockDataIndexDb.DeleteAll("DatabaseStatistics");
+            await StockDataIndexDb.DeleteAll("DividendSumsYear");
 
             // stocks
             List<Stock> stocks = new();
@@ -60,7 +62,7 @@ namespace DivVisualizer.Services
                 x.type.Equals("DIVIDEND", StringComparison.InvariantCultureIgnoreCase)))
             {
                 Dividend dividend = new Dividend(activityParqet.holding, activityParqet.amount ?? 0,
-                    activityParqet.amount ?? 0 - activityParqet.fee - activityParqet.tax, activityParqet.datetime,
+                    (activityParqet.amount ?? 0) - activityParqet.fee - activityParqet.tax, activityParqet.datetime,
                     activityParqet.shares);
                 dividends.Add(dividend);
             }
@@ -68,8 +70,8 @@ namespace DivVisualizer.Services
             var holdings = dividends.Select(dividend => dividend.ShareId).Distinct().ToHashSet();
             stocks = stocks.Where(s => holdings.Contains(s.Id)).ToList();
 
-            await StockDataIndexDb.AddItems<Stock>("Stocks", stocks);
-            await StockDataIndexDb.AddItems<Dividend>("Dividends", dividends);
+            await StockDataIndexDb.AddItems("Stocks", stocks);
+            await StockDataIndexDb.AddItems("Dividends", dividends);
             await PreparePreCalculatedDataAsync(stocks, dividends);
 
             Dispatcher.Dispatch(new SetImportDataAction(DateTime.Now, DateTime.Now, Data.ImportDataSource.ParqetFile));
@@ -84,7 +86,9 @@ namespace DivVisualizer.Services
                 {
                     monthly[div.Month - 1] += div.NetAmount;
                 }
-                DividendSumsYear dividendSumsYear = new DividendSumsYear(year.Key, monthly);
+                var allDividends = year.ToList();
+                var unqiue = allDividends.Select(dividend => dividend.PayDate.Date).Distinct().Count();
+                DividendSumsYear dividendSumsYear = new DividendSumsYear(year.Key, monthly, allDividends.Count, unqiue);
                 await StockDataIndexDb.AddItems("DividendSumsYear", new List<DividendSumsYear>() { dividendSumsYear });
             }
 
@@ -92,9 +96,16 @@ namespace DivVisualizer.Services
             databaseStatistics.Stocks = stocks.Count;
             databaseStatistics.Dividends = dividends.Count;
             databaseStatistics.EarliestDate = dividends.Min(d => d.PayDate);
-            databaseStatistics.SumDividends = dividends.Sum(d => d.NetAmount);
+            databaseStatistics.SumNetDividends = dividends.Sum(d => d.NetAmount);
+            databaseStatistics.SumGrossDividends = dividends.Sum(d => d.GrossAmount);
 
             await StockDataIndexDb.AddItems("DatabaseStatistics", new List<DatabaseStatistics>() { databaseStatistics });
+        }
+
+        public async Task<List<DividendSumsYear>> GetDividendSumAsync()
+        {
+            await StockDataIndexDb.OpenIndexedDb();
+            return await StockDataIndexDb.GetAll<DividendSumsYear>("DividendSumsYear");
         }
 
         public async Task<DatabaseStatistics> GetDatabaseOverviewAsync()

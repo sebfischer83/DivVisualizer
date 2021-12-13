@@ -13,6 +13,7 @@ using Fluxor;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebView.WindowsForms;
 using Microsoft.Extensions.DependencyInjection;
+using TagEChartsBlazor.Configuration;
 
 namespace DivVizParqet
 {
@@ -29,7 +30,9 @@ namespace DivVizParqet
             serviceCollection.AddFluxor(o => o
                 .ScanAssemblies(typeof(Program).Assembly).UseReduxDevTools(o => o.Name = "DivVizParqet").UseRouting().AddMiddleware<LoggingMiddleware>());
             serviceCollection.AddScoped<IDepotService, DepotService>();
-           
+            serviceCollection.AddScoped<JsNetBridgeService, JsNetBridgeService>();
+            serviceCollection.AddECharts();
+
             serviceCollection.AddBlazoredLocalStorage(config =>
             {
                 config.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;

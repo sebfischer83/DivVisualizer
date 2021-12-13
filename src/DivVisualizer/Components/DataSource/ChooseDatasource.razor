@@ -1,4 +1,5 @@
-﻿@using DivVizParqet.Components.ParqetUpload
+﻿@using DivVisualizer.Data
+@using DivVizParqet.Components.ParqetUpload
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
 <Card Style="width:300px;">
@@ -23,11 +24,11 @@
             </SpaceItem>
 
             <SpaceItem>
-                @if (SelectedSource == Data.ImportDataSource.ParqetFile)
+                @if (SelectedSource == ImportDataSource.ParqetFile)
                 {
                     <ParqetUploadComponent></ParqetUploadComponent>
                 }
-                else if (SelectedSource != Data.ImportDataSource.None)
+                else if (SelectedSource != ImportDataSource.None)
                 {
                     <Empty>
                         <DescriptionTemplate>

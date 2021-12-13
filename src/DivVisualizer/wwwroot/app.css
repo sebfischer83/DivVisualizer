@@ -25,8 +25,8 @@ body {
 }
 
 .container {
-    height: 100vh;
-    background-color: var(--fill-color);
+  /*  height: 100vh;
+    background-color: var(--fill-color);*/
 }
 
 .header {

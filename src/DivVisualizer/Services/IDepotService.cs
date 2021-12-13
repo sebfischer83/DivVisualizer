@@ -8,5 +8,6 @@ namespace DivVisualizer.Services
     {
         Task ImportStockDataFromParqetFile(IBrowserFile file);
         Task<DatabaseStatistics> GetDatabaseOverviewAsync();
+        Task<List<DividendSumsYear>> GetDividendSumAsync();
     }
 }

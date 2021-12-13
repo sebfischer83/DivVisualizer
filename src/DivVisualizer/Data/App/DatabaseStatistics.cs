@@ -14,8 +14,9 @@ namespace DivVisualizer.Data.App
         
         public int Dividends { get; set; }
 
-        public double SumDividends { get; set; }
+        public double SumNetDividends { get; set; }
 
         public DateTime EarliestDate { get; set; }
+        public double SumGrossDividends { get; internal set; }
     }
 }

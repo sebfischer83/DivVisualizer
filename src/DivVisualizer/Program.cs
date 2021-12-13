@@ -1,3 +1,6 @@
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("DivVisualizer.Tests")]
 namespace DivVizParqet
 {
     internal static class Program

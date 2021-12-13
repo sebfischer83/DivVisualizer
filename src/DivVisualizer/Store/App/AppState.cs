@@ -20,6 +20,8 @@ namespace DivVisualizer.Store.App
 
         public ImportDataSource LastImportDataSource { get; init; }
 
+        public IncomeType IncomeType { get; init; }
+
         public string LastImportDataSourceDescription
         {
             get
@@ -33,6 +35,7 @@ namespace DivVisualizer.Store.App
             LastSyncStocks = DateTime.MinValue;
             LastSyncMeta = DateTime.MinValue;
             LastImportDataSource = ImportDataSource.None;
+            IncomeType = IncomeType.Net;
         }
 
         public AppState(DateTime lastSyncStocks, DateTime lastSyncMeta, ImportDataSource dataSource)
