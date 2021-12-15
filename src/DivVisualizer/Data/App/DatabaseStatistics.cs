@@ -17,7 +17,10 @@ namespace DivVisualizer.Data.App
         public double SumNetDividends { get; set; }
 
         public DateTime EarliestDate { get; set; }
+
         public double SumGrossDividends { get; internal set; }
-        //public List<KeyValuePair<string, List<Dividend>>> ByStocks { get; internal set; }
+
+        public Dictionary<string, List<Dividend>> ByStocks { get; set; }
+        public int Paydays { get; internal set; }
     }
 }

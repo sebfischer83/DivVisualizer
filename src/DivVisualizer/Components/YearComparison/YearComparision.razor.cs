@@ -29,8 +29,6 @@ namespace DivVisualizer.Components.YearComparison
         [Inject]
         internal JsNetBridgeService JsNetBridgeService { get; set; } = null!;
 
-        internal string? LastSelectedYear;
-
         internal ECharts? OverviewChart;
 
         internal bool InitSuccess = false;
@@ -77,7 +75,6 @@ namespace DivVisualizer.Components.YearComparison
             // crazy stuff because razor yields always the last one and js functions are always async and can't be used here
             await JsNetBridgeService.SetValueAsync("xaxisdesc", JsonConvert.SerializeObject(XAxisDescriptions));
 
-            LastSelectedYear = Years.First();
             InitSuccess = true;
             StateHasChanged();
         }

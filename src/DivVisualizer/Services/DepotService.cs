@@ -101,11 +101,12 @@ namespace DivVisualizer.Services
             DatabaseStatistics databaseStatistics = new DatabaseStatistics();
             databaseStatistics.Stocks = stocks.Count;
             databaseStatistics.Dividends = dividends.Count;
+            databaseStatistics.Paydays = dividends.DistinctBy(a => a.PayDate).Count();
             databaseStatistics.EarliestDate = dividends.Min(d => d.PayDate);
             databaseStatistics.SumNetDividends = dividends.Sum(d => d.NetAmount);
             databaseStatistics.SumGrossDividends = dividends.Sum(d => d.GrossAmount);
-            //databaseStatistics.ByStocks = dividends.GroupBy(d => d.ShareId).
-            //    ToDictionary(d => d.Key, g => g.ToList()).Select(a => KeyValuePair.Create(a.Key, a.Value)).ToList();
+            databaseStatistics.ByStocks = dividends.GroupBy(d => d.ShareId).
+                ToDictionary(d => d.Key, g => g.ToList());
 
             await StockDataIndexDb.AddItems("DatabaseStatistics", new List<DatabaseStatistics>() { databaseStatistics });
         }
