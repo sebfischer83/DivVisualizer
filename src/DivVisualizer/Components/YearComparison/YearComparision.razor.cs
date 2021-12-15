@@ -43,7 +43,7 @@ namespace DivVisualizer.Components.YearComparison
 
         internal Dictionary<string, string> XAxisDescriptions { get; set; } = null!;
 
-        private const int YEARS_TO_SHOW = 8;
+        private const int YEARS_TO_SHOW = 10;
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -52,11 +52,10 @@ namespace DivVisualizer.Components.YearComparison
                 return;
 
             await JsNetBridgeService.InitAsync(null);
-            var result = await JsonDepotService.GetDividendSumAsync();
-
+            var result = (await JsonDepotService.GetDividendSumAsync()).GetXLastYears(YEARS_TO_SHOW);
 
             Years = result.Select(x => x.Year).OrderBy(x => x).Select(x => x.ToString()).ToArray();
-            SumValuesPerYear = result.OrderBy(x => x.Year).Select(x => Math.Round(x.SumPerMonth.Sum(), 2)).ToArray();
+            SumValuesPerYear = result.OrderBy(x => x.Year).Select(x => Math.Round(x.SumNetPerMonth.Sum(), 2)).ToArray();
             DividendSumsYears = result;
             XAxisDescriptions = new Dictionary<string, string>();
 
@@ -72,7 +71,7 @@ namespace DivVisualizer.Components.YearComparison
                     continue;
                 }
                 var actual = result.First(x=> x.Year == yearNr);
-                var change = Math.Round((actual.SumPerMonth.Sum() - before.SumPerMonth.Sum()) / before.SumPerMonth.Sum() * 100, 2);
+                var change = Math.Round((actual.SumNetPerMonth.Sum() - before.SumNetPerMonth.Sum()) / before.SumNetPerMonth.Sum() * 100, 2);
                 XAxisDescriptions.Add(year, $"{year} ({change}%)");
             }
             // crazy stuff because razor yields always the last one and js functions are always async and can't be used here

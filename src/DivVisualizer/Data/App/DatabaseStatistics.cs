@@ -18,5 +18,6 @@ namespace DivVisualizer.Data.App
 
         public DateTime EarliestDate { get; set; }
         public double SumGrossDividends { get; internal set; }
+        //public List<KeyValuePair<string, List<Dividend>>> ByStocks { get; internal set; }
     }
 }

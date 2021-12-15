@@ -81,14 +81,20 @@ namespace DivVisualizer.Services
         {
             foreach (var year in dividends.GroupBy(d => d.Year))
             {
-                double[] monthly = new double[12];
+                double[] monthlyNet = new double[12];
+                double[] monthlyGross = new double[12];
                 foreach (var div in year)
                 {
-                    monthly[div.Month - 1] += div.NetAmount;
+                    monthlyNet[div.Month - 1] += div.NetAmount;
+                    monthlyGross[div.Month - 1] += div.GrossAmount;
                 }
                 var allDividends = year.ToList();
                 var unqiue = allDividends.Select(dividend => dividend.PayDate.Date).Distinct().Count();
-                DividendSumsYear dividendSumsYear = new DividendSumsYear(year.Key, monthly, allDividends.Count, unqiue);
+
+                var byStock = year.GroupBy(d => d.ShareId).ToDictionary(k => k.Key, g => g.ToList());
+
+                DividendSumsYear dividendSumsYear = new DividendSumsYear(year.Key, monthlyNet, monthlyGross,
+                    allDividends.Count, unqiue, byStock);
                 await StockDataIndexDb.AddItems("DividendSumsYear", new List<DividendSumsYear>() { dividendSumsYear });
             }
 
@@ -98,6 +104,8 @@ namespace DivVisualizer.Services
             databaseStatistics.EarliestDate = dividends.Min(d => d.PayDate);
             databaseStatistics.SumNetDividends = dividends.Sum(d => d.NetAmount);
             databaseStatistics.SumGrossDividends = dividends.Sum(d => d.GrossAmount);
+            //databaseStatistics.ByStocks = dividends.GroupBy(d => d.ShareId).
+            //    ToDictionary(d => d.Key, g => g.ToList()).Select(a => KeyValuePair.Create(a.Key, a.Value)).ToList();
 
             await StockDataIndexDb.AddItems("DatabaseStatistics", new List<DatabaseStatistics>() { databaseStatistics });
         }

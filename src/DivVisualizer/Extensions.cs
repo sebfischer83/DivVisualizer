@@ -9,7 +9,7 @@ namespace DivVisualizer
 {
     internal static class Extensions
     {
-        public static IList<DividendSumsYear> GetXLastYears(this IList<DividendSumsYear> list, int years)
+        public static List<DividendSumsYear> GetXLastYears(this List<DividendSumsYear> list, int years)
         {
             if (years >= list.Count)
                 return list;
@@ -18,7 +18,7 @@ namespace DivVisualizer
             if (years >= possibleYears.Count)
                 return list;
 
-            var yearsLeft = possibleYears.OrderBy(x => x).Take(years).ToList();
+            var yearsLeft = possibleYears.OrderByDescending(x => x).Take(years).ToList();
 
             return list.Where(x => yearsLeft.Contains(x.Year)).ToList();
         }
