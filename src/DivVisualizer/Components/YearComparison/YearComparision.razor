@@ -6,9 +6,9 @@
     <AntDesign.Row>
         <AntDesign.Col Span="16">
             <ECharts Style="width: 100%; height: 400px;" @ref="OverviewChart" theme="infographic"
-            OnClick="@(new(async (param, chart) =>
+                 OnClick="@(new(async (param, chart) =>
                     {
-                       
+
                     }))">
                 <Dataset>
 
@@ -20,15 +20,15 @@
                     {
                         var tmp = item;
                         <Data value="tmp">
-                           
+
                         </Data>
                         @* crazy stuff because razor yields always the last one and js functions are always async and can't be used here *@
                         <AxisLabel inside="false" rotate="-40" formatter="@($"(value) => {{ return window.xaxisdesc[value]; }}")">
                             <TextStyle fontSize="10" fontWeight="normal">
-                             
+
                             </TextStyle>
                         </AxisLabel>
-                     }
+                    }
                 </XAxis>
                 <YAxis>
                     <AxisLabel formatter="(value, index) => {return value + '€';}"></AxisLabel>
@@ -44,14 +44,57 @@
                 </Series>
             </ECharts>
         </AntDesign.Col>
-        <AntDesign.Col Span="8">@LastSelectedYear</AntDesign.Col>
-    </AntDesign.Row>
+        <AntDesign.Col Span="8">
+            <Card Style="height:400px" BodyStyle="overflow:auto;">
+                <Table DataSource="@DividendSumsYears" HidePagination="@true" Size=@TableSize.Small>
+                    <AntDesign.Column @bind-Field="@context.Year" Title="Jahr"></AntDesign.Column>
+                    @if (AppState.Value.IncomeType == DivVisualizer.Data.IncomeType.Gross)
+                {
+                    <AntDesign.Column Title="Summe" @bind-Field="@context.SumGross">
+                        @context.SumGross €
+                    </AntDesign.Column>
+                }
+                else
+                {
+                    <AntDesign.Column Title="Summe" @bind-Field="@context.SumNet">
+                         @context.SumNet €
+                    </AntDesign.Column>
+                }
+                
+                 <AntDesign.Column Title="Veränderung" TData="string">
+                    @{
+                        var desc = XAxisDescriptions[context.Year.ToString()];
+                        desc = desc.Replace(context.Year.ToString(), "").Trim().TrimStart('(').TrimEnd(')');
+                    }
+                    <i style="@($"color: {(desc.StartsWith("-") ? "red" : "green")}")">
+                    @desc
+                    </i>
+                 </AntDesign.Column>
+                @{
+                    var sum = DividendSumsYears.Sum(a =>
+                            {
+                                return (AppState.Value.IncomeType == DivVisualizer.Data.IncomeType.Gross) ? a.SumGross : a.SumNet;
+                            });
+                    sum = Math.Round(sum, 2);
+                }
+                <SummaryRow>
+                     <SummaryCell>
+                         Summe
+                     </SummaryCell>
+                     <SummaryCell>
+                         @sum
+                     </SummaryCell>
+                 </SummaryRow>
+            </Table>
+        </Card>
+    </AntDesign.Col>
+</AntDesign.Row>
     <AntDesign.Row>
-         <AntDesign.Col Span="24">
-             <ECharts Style="width: 100%; height: 400px;" @ref="OverviewChart" theme="infographic"
-            OnClick="@(new(async (param, chart) =>
+        <AntDesign.Col Span="24">
+            <ECharts Style="width: 100%; height: 400px;" @ref="OverviewChart" theme="infographic"
+                 OnClick="@(new(async (param, chart) =>
                     {
-                       
+
                     }))">
                 <Dataset>
 
@@ -63,14 +106,14 @@
                     {
                         var tmp = item;
                         <Data value="tmp">
-                           
+
                         </Data>
                         <AxisLabel inside="false" rotate="-20" formatter="@($"(value) => {{ return value; }}")">
                             <TextStyle fontSize="10" fontWeight="normal">
-                             
+
                             </TextStyle>
                         </AxisLabel>
-                     }
+                    }
                 </XAxis>
                 <YAxis>
                     <AxisLabel formatter="(value, index) => {return value + '€';}"></AxisLabel>
@@ -85,7 +128,7 @@
                 <Series name="Dividenden" type="bar" data="@SumValuesPerYear" hoverAnimation="true">
                 </Series>
             </ECharts>
-         </AntDesign.Col>
+        </AntDesign.Col>
     </AntDesign.Row>
 
 }

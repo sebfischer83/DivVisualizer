@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,6 +22,12 @@ namespace DivVisualizer.Data.App
         public int Paydays { get; set; }
 
         public int UnqiuePaydays { get; set; }
+
+        [JsonIgnore]
+        public double SumNet { get; set; }
+
+        [JsonIgnore]
+        public double SumGross { get; set; }
 
         public Dictionary<string, List<Dividend>> ByStock { get; }
 
@@ -48,6 +55,9 @@ namespace DivVisualizer.Data.App
                 sum += sumNetPerMonth[i];
                 CumulativeSumNetPerMonth[i] = sum;
             }
+
+            SumGross = Math.Round(sumGrossPerMonth.Sum(), 2);
+            SumNet = Math.Round(sumNetPerMonth.Sum(), 2);
 
             sum = 0;
             for (int i = 0; i < 12; i++)
