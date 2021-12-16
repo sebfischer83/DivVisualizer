@@ -1,8 +1,16 @@
-﻿@using TagEChartsBlazor.Components
+﻿@using DivVisualizer.Components.TableExport
+@using TagEChartsBlazor.Components
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
 @if (InitSuccess)
 {
+    <AntDesign.Row>
+        <AntDesign.Col Span="24">
+            <DatePicker TValue="DateTime?" Picker="@DatePickerType.Year"
+               DisabledDate="date => date.Year < MinimumYear || date.Year > DateTime.Now.Year" DefaultValue="new DateTime(SelectedYear, 1, 1)"
+               OnChange="OnDateChange"  />
+            </AntDesign.Col>
+    </AntDesign.Row>
     <AntDesign.Row>
         <AntDesign.Col Span="16">
             <ECharts Style="width: 100%; height: 400px;" @ref="OverviewChart" theme="infographic"
@@ -13,6 +21,9 @@
                 <Dataset>
 
                 </Dataset>
+                <Grid left="2%" right="2%">
+
+                </Grid>
                 <TagEChartsBlazor.Components.Title text="Verlauf der letzten 10 Jahre"></TagEChartsBlazor.Components.Title>
                 <TagEChartsBlazor.Components.Tooltip trigger="item" triggerOn="mousemove" formatter=" {c}€ "></TagEChartsBlazor.Components.Tooltip>
                 <XAxis type="category" z="10">
@@ -46,7 +57,8 @@
         </AntDesign.Col>
         <AntDesign.Col Span="8">
             <Card Style="height:400px" BodyStyle="overflow:auto;">
-                <Table DataSource="@DividendSumsYears" HidePagination="@true" Size=@TableSize.Small>
+                <TableExportComponent Table="@DivChangesPerYearTable"></TableExportComponent>
+                <Table DataSource="@DividendSumsYears" HidePagination="@true" Size=@TableSize.Small @ref="DivChangesPerYearTable">
                     <AntDesign.Column @bind-Field="@context.Year" Title="Jahr"></AntDesign.Column>
                     @if (AppState.Value.IncomeType == DivVisualizer.Data.IncomeType.Gross)
                 {
@@ -57,34 +69,34 @@
                 else
                 {
                     <AntDesign.Column Title="Summe" @bind-Field="@context.SumNet">
-                         @context.SumNet €
+                        @context.SumNet €
                     </AntDesign.Column>
                 }
-                
-                 <AntDesign.Column Title="Veränderung" TData="string">
+
+                <AntDesign.Column Title="Veränderung" TData="string">
                     @{
                         var desc = XAxisDescriptions[context.Year.ToString()];
                         desc = desc.Replace(context.Year.ToString(), "").Trim().TrimStart('(').TrimEnd(')');
                     }
                     <i style="@($"color: {(desc.StartsWith("-") ? "red" : "green")}")">
-                    @desc
+                        @desc
                     </i>
-                 </AntDesign.Column>
+                </AntDesign.Column>
                 @{
                     var sum = DividendSumsYears.Sum(a =>
-                            {
-                                return (AppState.Value.IncomeType == DivVisualizer.Data.IncomeType.Gross) ? a.SumGross : a.SumNet;
-                            });
+                                {
+                                    return (AppState.Value.IncomeType == DivVisualizer.Data.IncomeType.Gross) ? a.SumGross : a.SumNet;
+                                });
                     sum = Math.Round(sum, 2);
                 }
                 <SummaryRow>
-                     <SummaryCell>
-                         Summe
-                     </SummaryCell>
-                     <SummaryCell>
-                         @sum
-                     </SummaryCell>
-                 </SummaryRow>
+                    <SummaryCell>
+                        Summe
+                    </SummaryCell>
+                    <SummaryCell>
+                        @sum
+                    </SummaryCell>
+                </SummaryRow>
             </Table>
         </Card>
     </AntDesign.Col>
@@ -96,24 +108,17 @@
                     {
 
                     }))">
-                <Dataset>
+                <Dataset source="@MonthlyData">
 
                 </Dataset>
-                <TagEChartsBlazor.Components.Title text="Dividendenübersicht"></TagEChartsBlazor.Components.Title>
-                <TagEChartsBlazor.Components.Tooltip trigger="item" triggerOn="mousemove" formatter=" {c}€ "></TagEChartsBlazor.Components.Tooltip>
+                <Grid left="2%" right="2%">
+
+                </Grid>
+                <TagEChartsBlazor.Components.Title text="Monat je Jahr"></TagEChartsBlazor.Components.Title>
+                <TagEChartsBlazor.Components.Tooltip></TagEChartsBlazor.Components.Tooltip>
+                @*<TagEChartsBlazor.Components.Tooltip trigger="item" triggerOn="mousemove" formatter=" {c}€ "></TagEChartsBlazor.Components.Tooltip>*@
                 <XAxis type="category" z="10">
-                    @foreach (var item in Years)
-                    {
-                        var tmp = item;
-                        <Data value="tmp">
 
-                        </Data>
-                        <AxisLabel inside="false" rotate="-20" formatter="@($"(value) => {{ return value; }}")">
-                            <TextStyle fontSize="10" fontWeight="normal">
-
-                            </TextStyle>
-                        </AxisLabel>
-                    }
                 </XAxis>
                 <YAxis>
                     <AxisLabel formatter="(value, index) => {return value + '€';}"></AxisLabel>
@@ -125,8 +130,69 @@
                         <MagicType type="@(new string[] {"line", "bar"})"></MagicType>
                     </Feature>
                 </Toolbox>
-                <Series name="Dividenden" type="bar" data="@SumValuesPerYear" hoverAnimation="true">
+                <Series type="bar" hoverAnimation="true">
                 </Series>
+                <Series type="bar" hoverAnimation="true">
+                </Series>
+                <Series type="bar" hoverAnimation="true">
+                </Series>
+                <Series type="bar" hoverAnimation="true">
+                </Series>
+                <Series type="bar" hoverAnimation="true">
+                </Series>
+                <Series type="bar" hoverAnimation="true">
+                </Series>
+                <Series type="bar" hoverAnimation="true">
+                </Series>
+                <Series type="bar" hoverAnimation="true">
+                </Series>
+                <Series type="bar" hoverAnimation="true">
+                </Series>
+                <Series type="bar" hoverAnimation="true">
+                </Series>
+                <Series type="bar" hoverAnimation="true">
+                </Series>
+                <Series type="bar" hoverAnimation="true">
+                </Series>
+            </ECharts>
+        </AntDesign.Col>
+    </AntDesign.Row>
+
+    <AntDesign.Row>
+        <AntDesign.Col Span="24">
+            <ECharts Style="width: 100%; height: 400px;" @ref="OverviewChart" theme="infographic"
+                 OnClick="@(new(async (param, chart) =>
+                    {
+
+                    }))">
+                <Dataset source="@MonthlyComparisionData">
+
+                </Dataset>
+                <Grid left="2%" right="2%">
+
+                </Grid>
+                <TagEChartsBlazor.Components.Title text="Vergleich je Monat"></TagEChartsBlazor.Components.Title>
+                <TagEChartsBlazor.Components.Tooltip></TagEChartsBlazor.Components.Tooltip>
+                @*<TagEChartsBlazor.Components.Tooltip trigger="item" triggerOn="mousemove" formatter=" {c}€ "></TagEChartsBlazor.Components.Tooltip>*@
+                <XAxis type="category" z="10">
+
+                </XAxis>
+                <YAxis>
+                    <AxisLabel formatter="(value, index) => {return value + '€';}"></AxisLabel>
+                </YAxis>
+                <Toolbox>
+                    <Feature>
+                        <SaveAsImage type="png" pixelRatio="2"></SaveAsImage>
+                        <DataView></DataView>
+                        <MagicType type="@(new string[] {"line", "bar"})"></MagicType>
+                    </Feature>
+                </Toolbox>
+                @foreach (var year in Years)
+                {
+                    <Series type="bar" hoverAnimation="true">
+                    </Series>
+                }
+
             </ECharts>
         </AntDesign.Col>
     </AntDesign.Row>

@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using BlazorDownloadFile;
 using Blazored.LocalStorage;
 using DivVisualizer.Data.Db;
 using DivVisualizer.Services;
@@ -43,6 +44,8 @@ namespace DivVizParqet
                 config.JsonSerializerOptions.ReadCommentHandling = JsonCommentHandling.Skip;
                 config.JsonSerializerOptions.WriteIndented = true;
             });
+
+            serviceCollection.AddBlazorDownloadFile();
             serviceCollection.AddSingleton<IErrorBoundaryLogger>(new NullErrorBoundaryLogger());
             serviceCollection.AddScoped(sp => new HttpClient { BaseAddress = new Uri("localhost") });
             serviceCollection.AddAntDesign();

@@ -1,0 +1,16 @@
+﻿@typeparam TItem
+
+<Dropdown Trigger="@(new Trigger[] { Trigger.Click })">
+    <Overlay>
+        <Menu>
+            <MenuItem @onclick="() => ExportMarkdownAsync()">
+                Markdown
+            </MenuItem>
+        </Menu>
+    </Overlay>
+    <ChildContent>
+        <a class="ant-dropdown-link" @onclick:preventDefault>
+            Export <Icon Type="down" />
+        </a>
+    </ChildContent>
+</Dropdown>
