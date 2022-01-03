@@ -21,6 +21,7 @@ namespace DivVisualizer.Data.App
         public double SumGrossDividends { get; internal set; }
 
         public Dictionary<string, List<Dividend>> ByStocks { get; set; }
-        public int Paydays { get; internal set; }
+        public int Paydays { get; set; }
+        public DateTime MaxDate { get;  set; }
     }
 }

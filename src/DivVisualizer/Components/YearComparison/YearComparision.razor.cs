@@ -176,6 +176,11 @@ namespace DivVisualizer.Components.YearComparison
             StateHasChanged();
         }
 
+        internal void ExportYearTableToMarkdown()
+        {
+
+        }
+
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);

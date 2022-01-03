@@ -13,21 +13,19 @@ namespace DivVisualizer.Components.TableExport
         [Parameter, EditorRequired]
         public AntDesign.Table<TItem> Table { get; set; } = null!;
 
-        [Inject]
-        IBlazorDownloadFileService BlazorDownloadFileService { get; set; } = null!;
+        [Parameter]
+        public Action ExportMarkdownClicked { get; set;}
 
         protected override void OnParametersSet()
         {
             base.OnParametersSet();
         }
 
-        internal async Task ExportMarkdownAsync()
-        {
-            var data = '|' + string.Join('|', Table.ColumnContext.Columns.Select(c => c.Title)) + '|';
-            data += Environment.NewLine + "|-	|-	 |-	 |";
+        
+    }
 
-            await BlazorDownloadFileService.DownloadFileFromText("export.md", data,
-                Encoding.UTF8, "text/plain", false);
-        }
+    public class TableData
+    {
+
     }
 }

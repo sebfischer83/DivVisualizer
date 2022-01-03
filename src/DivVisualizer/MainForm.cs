@@ -31,6 +31,7 @@ namespace DivVizParqet
             serviceCollection.AddFluxor(o => o
                 .ScanAssemblies(typeof(Program).Assembly).UseReduxDevTools(o => o.Name = "DivVizParqet").UseRouting().AddMiddleware<LoggingMiddleware>());
             serviceCollection.AddScoped<IDepotService, DepotService>();
+            serviceCollection.AddScoped<ExportService, ExportService>();
             serviceCollection.AddScoped<JsNetBridgeService, JsNetBridgeService>();
             serviceCollection.AddECharts();
 

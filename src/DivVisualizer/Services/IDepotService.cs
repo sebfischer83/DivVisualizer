@@ -9,5 +9,7 @@ namespace DivVisualizer.Services
         Task ImportStockDataFromParqetFile(IBrowserFile file);
         Task<DatabaseStatistics> GetDatabaseOverviewAsync();
         Task<List<DividendSumsYear>> GetDividendSumAsync();
+        Task<List<Stock>> GetStocks();
+        Task<List<Dividend>> GetDividendsForYear(int year);
     }
 }

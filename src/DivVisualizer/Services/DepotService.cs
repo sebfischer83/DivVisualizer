@@ -77,6 +77,24 @@ namespace DivVisualizer.Services
             Dispatcher.Dispatch(new SetImportDataAction(DateTime.Now, DateTime.Now, Data.ImportDataSource.ParqetFile));
         }
 
+        public async Task<List<Dividend>> GetDividendsForYear(int year)
+        {
+            await StockDataIndexDb.OpenIndexedDb();
+
+            var dividends = await StockDataIndexDb.GetByIndex<int, Dividend>("Dividends", year, year, "year", false);
+            if (dividends == null)
+                return new();
+
+            return dividends;
+        }
+
+        public async Task<List<Stock>> GetStocks()
+        {
+            await StockDataIndexDb.OpenIndexedDb();
+
+            return await StockDataIndexDb.GetAll<Stock>("Stocks");
+        }
+
         private async Task PreparePreCalculatedDataAsync(List<Stock> stocks, List<Dividend> dividends)
         {
             foreach (var year in dividends.GroupBy(d => d.Year))
@@ -103,6 +121,7 @@ namespace DivVisualizer.Services
             databaseStatistics.Dividends = dividends.Count;
             databaseStatistics.Paydays = dividends.DistinctBy(a => a.PayDate).Count();
             databaseStatistics.EarliestDate = dividends.Min(d => d.PayDate);
+            databaseStatistics.MaxDate = dividends.Max(d => d.PayDate);
             databaseStatistics.SumNetDividends = dividends.Sum(d => d.NetAmount);
             databaseStatistics.SumGrossDividends = dividends.Sum(d => d.GrossAmount);
             databaseStatistics.ByStocks = dividends.GroupBy(d => d.ShareId).

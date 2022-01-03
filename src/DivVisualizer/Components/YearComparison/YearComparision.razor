@@ -24,7 +24,7 @@
                 <Grid left="2%" right="2%">
 
                 </Grid>
-                <TagEChartsBlazor.Components.Title text="Verlauf der letzten 10 Jahre"></TagEChartsBlazor.Components.Title>
+                <TagEChartsBlazor.Components.Title text="Dividenden per Jahr"></TagEChartsBlazor.Components.Title>
                 <TagEChartsBlazor.Components.Tooltip trigger="item" triggerOn="mousemove" formatter=" {c}€ "></TagEChartsBlazor.Components.Tooltip>
                 <XAxis type="category" z="10">
                     @foreach (var item in Years)
@@ -57,7 +57,7 @@
         </AntDesign.Col>
         <AntDesign.Col Span="8">
             <Card Style="height:400px" BodyStyle="overflow:auto;">
-                <TableExportComponent Table="@DivChangesPerYearTable"></TableExportComponent>
+                <TableExportComponent Table="@DivChangesPerYearTable" ExportMarkdownClicked="ExportYearTableToMarkdown"></TableExportComponent>
                 <Table DataSource="@DividendSumsYears" HidePagination="@true" Size=@TableSize.Small @ref="DivChangesPerYearTable">
                     <AntDesign.Column @bind-Field="@context.Year" Title="Jahr"></AntDesign.Column>
                     @if (AppState.Value.IncomeType == DivVisualizer.Data.IncomeType.Gross)
